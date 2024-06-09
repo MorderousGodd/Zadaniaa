@@ -1,0 +1,55 @@
+#include <iostream>
+#include <vector>
+#include <limits> // Do obsługi błędów strumienia wejścia
+#include <windows.h>
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    int n;
+    double x, y;
+    std::cout << "Podaj stopien wielomianu (maksymalnie 10): ";
+    std::cin >> n;
+
+    // Sprawdzenie poprawności danych wejściowych
+    while (std::cin.fail() || n < 0 || n > 10) {
+        std::cout << "Nieprawidlowa wartosc. Podaj stopien wielomianu (maksymalnie 10): ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin >> n;
+    }
+
+    std::cout << "Podaj wartość argumentu x: ";
+    std::cin >> x;
+
+    // Sprawdzenie poprawności danych wejściowych
+    while (std::cin.fail()) {
+        std::cout << "Nieprawidlowa wartosc. Podaj wartość argumentu x: ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin >> x;
+    }
+
+    std::vector<double> a(n+1);
+    std::cout << "Podaj współczynniki wielomianu (od najwyzszej potegi):\n";
+    for (int i = n; i >= 0; i--) {
+        std::cout << "a[" << i << "]: ";
+        std::cin >> a[i];
+
+        // Sprawdzenie poprawności danych wejściowych
+        while (std::cin.fail()) {
+            std::cout << "Nieprawidlowa wartosc. Podaj współczynnik a[" << i << "]: ";
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin >> a[i];
+        }
+    }
+
+    y = a[n];
+    for (int i = n-1; i >= 0; i--) {
+        y = y * x + a[i];
+    }
+
+    std::cout << "Wartość wielomianu dla x = " << x << " wynosi: " << y << std::endl;
+
+    return 0;
+}

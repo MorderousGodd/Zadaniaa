@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stack>
+#include <cstdlib> // dla funkcji exit()
+#include <windows.h>
+
+using namespace std;
+
+void printBinary(int n) {
+    stack<int> binaryDigits;
+
+    // Konwersja na system binarny
+    if (n == 0) {
+        binaryDigits.push(0);
+    } else {
+        while (n > 0) {
+            binaryDigits.push(n % 2);
+            n /= 2;
+        }
+    }
+
+    // Wyświetlanie wartości binarnej
+    cout << "Wartość binarna: ";
+    while (!binaryDigits.empty()) {
+        cout << binaryDigits.top();
+        binaryDigits.pop();
+    }
+}
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    int liczba;
+
+    cout << "Podaj liczbę całkowitą: ";
+    if (!(cin >> liczba)) {
+        cerr << "Błąd: Wprowadzono niepoprawne dane.\n";
+        exit(EXIT_FAILURE);
+    }
+
+    printBinary(abs(liczba)); // Wartość bezwzględna dla liczb ujemnych
+
+    return 0;
+}

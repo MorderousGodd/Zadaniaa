@@ -1,0 +1,45 @@
+#include <iostream>
+#include <windows.h>
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    int N, K = 3, L, Z;
+
+    std::cout << "Wprowadź dodatnią liczbę całkowitą: ";
+    std::cin >> N;
+
+    // Sprawdzenie czy N jest dodatnie
+    if (N <= 0) {
+        std::cout << "Wprowadzono nieprawidłową liczbę. Program zostanie zakończony.\n";
+        return 1; // Zakończenie programu z kodem błędu
+    }
+
+    // Zabezpieczenie przed niepotrzebnymi obliczeniami
+    if (N < 3) {
+        std::cout << "Brak liczb pierwszych mniejszych od " << N << std::endl;
+        return 0;
+    }
+
+    std::cout << "Liczby pierwsze mniejsze od " << N << " to:\n";
+
+    while (K < N) {
+        L = 2;
+        Z = 0;
+
+        while (L * L <= K) { // Optymalizacja warunku pętli
+            if (K % L == 0) {
+                Z = 1;
+                break;
+            }
+            L++;
+        }
+
+        if (Z == 0) {
+            std::cout << K << " jest liczbą pierwszą." << std::endl;
+        }
+
+        K += 2; // Sprawdzamy tylko liczby nieparzyste
+    }
+
+    return 0;
+}

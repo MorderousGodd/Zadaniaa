@@ -1,0 +1,58 @@
+//Liczby bliźniacze – dwie liczby pierwsze, których różnica wynosi 2.
+
+#include <iostream>
+#include <vector>
+#include <utility> // dla std::pair
+#include <windows.h>
+
+// Funkcja sprawdzająca czy liczba jest liczbą pierwszą
+bool isPrime(int n) {
+    if (n <= 1)
+        return false;
+    for (int i = 2; i * i <= n; ++i) {
+        if (n % i == 0)
+            return false;
+    }
+    return true;
+}
+
+// Funkcja znajdująca liczby bliźniacze w danym przedziale
+std::vector<std::pair<int, int>> findTwinPrimes(int start, int end) {
+    std::vector<std::pair<int, int>> twinPrimes;
+    for (int i = start; i <= end - 2; ++i) {
+        if (isPrime(i) && isPrime(i + 2)) {
+            twinPrimes.push_back(std::make_pair(i, i + 2));
+        }
+    }
+    return twinPrimes;
+}
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    const int MAX_RANGE = 10000; // maksymalna długość przedziału
+
+    int start, end;
+
+    // Wprowadzenie użytkownika
+    std::cout << "Podaj początek przedziału: ";
+    std::cin >> start;
+
+    std::cout << "Podaj koniec przedziału: ";
+    std::cin >> end;
+
+    // Sprawdzenie poprawności przedziału
+    if (start <= 0 || end <= 0 || start >= end || end - start > MAX_RANGE) {
+        std::cerr << "Nieprawidłowy przedział!\n";
+        return 1;
+    }
+
+    // Znalezienie i wyświetlenie liczb bliźniaczych
+    std::vector<std::pair<int, int>> twinPrimes = findTwinPrimes(start, end);
+
+    std::cout << "Liczby bliźniacze w przedziale [" << start << ", " << end << "]:\n";
+    for (const auto& pair : twinPrimes) {
+        std::cout << "(" << pair.first << ", " << pair.second << ")\n";
+    }
+
+    return 0;
+}

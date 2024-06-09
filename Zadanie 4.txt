@@ -1,0 +1,39 @@
+#include <iostream>
+#include <limits>
+#include <windows.h>
+
+using namespace std;
+
+double calculatePi(int iterations) {
+    if(iterations <= 0) {
+        throw invalid_argument("Liczba iteracji musi być dodatnia.");
+    }
+
+    double pi = 2.0;
+    for (int i = 1; i <= iterations; ++i) {
+        int numerator = 2 * i;
+        int denominator = 2 * i - 1;
+        pi *= static_cast<double>(numerator * numerator) / (denominator * (denominator + 2));
+    }
+    return pi;
+}
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    int iterations;
+    cout << "Podaj liczbę iteracji: ";
+    while (!(cin >> iterations)) {
+        cout << "Nieprawidłowe dane wejściowe. Podaj liczbę całkowitą: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+
+    try {
+        double pi = calculatePi(iterations);
+        cout << "Przybliżona wartość liczby Pi za pomocą wzoru Wallisa: " << pi << endl;
+    } catch(const invalid_argument& e) {
+        cerr << "Błąd: " << e.what() << endl;
+    }
+
+    return 0;
+}

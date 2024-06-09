@@ -1,0 +1,41 @@
+#include <iostream>
+#include <limits>
+#include <windows.h>
+
+bool czyDoskonala(int liczba) {
+    int sumaDzielnikow = 0;
+    for (int i = 1; i <= liczba / 2; ++i) {
+        if (liczba % i == 0) {
+            sumaDzielnikow += i;
+        }
+    }
+    return sumaDzielnikow == liczba;
+}
+
+int main() {
+    SetConsoleOutputCP(CP_UTF8);
+    int dolnyPrzedzial, gornyPrzedzial;
+
+    std::cout << "Podaj dolny przedzial (od 1 do 1000): ";
+    while (!(std::cin >> dolnyPrzedzial) || dolnyPrzedzial < 1 || dolnyPrzedzial > 1000) {
+        std::cout << "Bledne dane. Podaj dolny przedzial (od 1 do 1000): ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    std::cout << "Podaj gorny przedzial (od " << dolnyPrzedzial << " do 1000): ";
+    while (!(std::cin >> gornyPrzedzial) || gornyPrzedzial < dolnyPrzedzial || gornyPrzedzial > 1000) {
+        std::cout << "Bledne dane. Podaj gorny przedzial (od " << dolnyPrzedzial << " do 1000): ";
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    std::cout << "Liczby doskonale w przedziale [" << dolnyPrzedzial << "-" << gornyPrzedzial << "] to:\n";
+    for (int i = dolnyPrzedzial; i <= gornyPrzedzial; ++i) {
+        if (czyDoskonala(i)) {
+            std::cout << i << " ";
+        }
+    }
+    std::cout << "\n";
+    return 0;
+}
